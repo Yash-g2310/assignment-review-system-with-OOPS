@@ -121,12 +121,6 @@ public:
         cout << "Pending assignments: " << ctr << endl;
     }
 
-    void add_assig(string a, string b)
-    {
-        Assignment assig(a, b);
-        assignments.push_back(assig);
-    };
-
     string check_pass() { return password; };
     vector<string> get_details()
     {
@@ -138,7 +132,9 @@ public:
     {
         this->assignments = assignments;
     }
+    friend class Reviewer;
 };
+
 class Reviewer : public IMG_Member
 {
 private:
@@ -179,6 +175,11 @@ public:
         cin >> gmail;
         this->gmail = gmail;
     }
+    void add_assig(Student &s, string a, string b)
+    {
+        Assignment assig(a, b);
+        s.assignments.push_back(assig);
+    };
 
     void show_details()
     {
@@ -419,7 +420,7 @@ void base_login()
                             base_assignment.push_back(asig2);
                             for (auto it : student_details)
                             {
-                                it.second.add_assig(assig_name, assig_content);
+                                reviewer_details[enr].add_assig(it.second, assig_name, assig_content);
                                 student_details[it.first] = it.second;
                             }
                             cout << endl;
